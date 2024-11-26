@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-export default function Settings() {
+const Settings = () => {
   return (
     <View style={styles.container}>
-      <Text>Manage your privacy settings here.</Text>
+      <Text>Settings</Text>
     </View>
-  );
+  )
 }
+
+export default Settings
 
 const styles = StyleSheet.create({
   container: {

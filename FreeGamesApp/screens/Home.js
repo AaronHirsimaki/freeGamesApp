@@ -63,5 +63,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         textAlign: "center",
+        paddingTop: 5,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
     }
 });
