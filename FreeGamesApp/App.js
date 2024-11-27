@@ -7,7 +7,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, FirebaseAuth } from './firebaseConfig';
+import { FirebaseAuth } from './firebaseConfig';
 import firebaseConfig from './firebaseConfig';
 import firebase from './firebaseSetup';
 
@@ -43,9 +43,9 @@ function MainTabs() {
         tabBarActiveTintColor: 'purple',
         tabBarInactiveTintColor: 'gray',
       })}>
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
     </Tab.Navigator>
   )
 }
@@ -56,7 +56,7 @@ export default function App() {
 
   useEffect(() => {
     // Listen for auth state changes
-    const unsubscribe = onAuthStateChanged(FirebaseAuth, (currentUser) => {
+    const unsubscribe = FirebaseAuth.onAuthStateChanged((currentUser) => {
       setUser(currentUser); // Update user state when authentication state changes
     });
 
@@ -66,8 +66,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

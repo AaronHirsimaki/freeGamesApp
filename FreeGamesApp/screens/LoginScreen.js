@@ -2,6 +2,31 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { login } from '../auth/authService';
 
+import Home from './Home';
+
+export const saveUserToFirestore = async (user) => {
+  try {
+    if (!user) {
+      console.error("No user provided");
+      return;
+    }
+
+    const userRef = doc(FirebaseFirestore, "users", user.uid); // Luo dokumentti käyttäjälle uid:n mukaan
+
+    // Tallenna käyttäjän tiedot Firestoreen
+    await setDoc(userRef, {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName || "Anonymous",
+      createdAt: new Date(),
+    });
+
+    console.log("User data saved to Firestore");
+  } catch (error) {
+    console.error("Error saving user data to Firestore:", error);
+  }
+};
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

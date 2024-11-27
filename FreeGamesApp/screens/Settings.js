@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import * as Font from 'expo-font';
 
 const Settings = () => {
   return (
