@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { login } from '../auth/authService';
+import { useNavigation } from '@react-navigation/native';
 
-import Home from './Home';
 
 export const saveUserToFirestore = async (user) => {
   try {
@@ -27,12 +27,20 @@ export const saveUserToFirestore = async (user) => {
   }
 };
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const navigation = useNavigation();
+
   const handleLogin = async () => {
+    
+    if (!email || !password) {
+      setError('Email and password cannot be empty');
+      return;
+    }
+
     try {
       console.log('Attempting login with', email, password);  // Debug-loki
       await login(email, password);
@@ -61,14 +69,51 @@ export default function LoginScreen({ navigation }) {
         style={styles.input}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="Go to Register" onPress={() => navigation.navigate('Register')} />
+      {/* <Button title="Login" onPress={handleLogin} />
+      <Button title="Go to Register" onPress={() => navigation.navigate('Register')} /> */}
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 16 },
-  input: { borderBottomWidth: 1, marginBottom: 12, padding: 8 },
-  error: { color: 'red', marginBottom: 12 }
+  container: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    padding: 16 
+  },
+  input: { 
+    borderBottomWidth: 1,
+    marginBottom: 12, 
+    padding: 8 
+  },
+  error: { 
+    color: 'red', 
+    marginBottom: 12 
+  },
+  button: {
+    backgroundColor: '#6a0dad', // Purple background
+    paddingVertical: 12, // Vertical padding
+    paddingHorizontal: 20, // Horizontal padding
+    borderRadius: 30, // Rounded corners
+    alignItems: 'center', // Center the text horizontally
+    justifyContent: 'center', // Center the text vertically
+    elevation: 5, // Adds a shadow (Android)
+    shadowColor: '#000', // Shadow color (iOS)
+    marginBottom: 20,
+    shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
+    shadowOpacity: 0.2, // Shadow opacity (iOS)
+    shadowRadius: 5, // Shadow radius (iOS)
+  },
+  buttonText: {
+    color: 'white', // White text
+    fontSize: 16, // Font size
+    fontWeight: 'bold', // Bold text
+    textAlign: 'center', // Center the text
+  }
 });

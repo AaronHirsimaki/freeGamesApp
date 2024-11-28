@@ -13,8 +13,8 @@ import firebase from './firebaseSetup';
 
 
 import Home from './screens/Home';
+import Wishlist from './screens/Wishlist';
 import Profile from './screens/Profile';
-import Settings from './screens/Settings';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 
@@ -30,11 +30,11 @@ function MainTabs() {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = 'home';
-          } else if (route.name === 'Settings') {
-            iconName = 'settings';
+            iconName = 'home-outline';
+          } else if (route.name === 'Wishlist') {
+            iconName = 'reader-outline';
           } else if (route.name === 'Profile') {
-            iconName = 'person'
+            iconName = 'person-outline'
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -43,9 +43,9 @@ function MainTabs() {
         tabBarActiveTintColor: 'purple',
         tabBarInactiveTintColor: 'gray',
       })}>
-      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+      <Tab.Screen name="Wishlist" component={Wishlist} options={{ headerShown: false }}/>
       <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-      <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   )
 }

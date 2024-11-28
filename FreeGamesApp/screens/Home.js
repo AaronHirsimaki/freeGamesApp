@@ -1,5 +1,5 @@
 
-import { FlatList, Button, StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
+import { FlatList, Button, StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity, Linking } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FirebaseApp, FirebaseFirestore } from '../firebaseConfig'; // Firestore import
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
@@ -88,9 +88,9 @@ const Home = () => {
         }
     };
 
-    useEffect (() => {
+    useEffect(() => {
         loadWishlist()
-    },[])
+    }, [])
 
     /* const handleAddToWishlist = async (game) => {
         try {
@@ -159,8 +159,15 @@ const Home = () => {
                     renderItem={({ item }) => (
                         <View>
                             <Image source={{ uri: item.thumbnail }} style={styles.image} />
-                            <Text style={styles.text}>{item.short_description}</Text>
-                            <Button title="Add to Wishlist" style={styles.button} onPress={() => addGameToWishlist(item)}/>
+                            <Text style={styles.gamename}>{item.title}</Text>
+                            <Text style={styles.description}>{item.short_description}</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.game_url)}>
+                                <Text style={styles.buttonText}>Visit site</Text>
+                            </TouchableOpacity>
+                            {/* <Button title="Add to Wishlist" style={styles.button} onPress={() => addGameToWishlist(item)}/> */}
+                            <TouchableOpacity style={styles.button} onPress={() => addGameToWishlist(item)}>
+                                <Text style={styles.buttonText}>Add to Wishlist</Text>
+                            </TouchableOpacity>
                         </View>
                     )} />
             )}
@@ -172,16 +179,20 @@ export default Home;
 
 const styles = StyleSheet.create({
     image: {
+        paddingTop: 15,
         height: 200,
-        width: 400,
+        width: 380,
+        resizeMode: 'cover',
+        marginHorizontal: 10,
+        paddingTop: 25
     },
     text: {
         fontSize: 20,
         textAlign: "center",
         paddingTop: 5,
         paddingBottom: 15,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 20,
+        paddingRight: 20,
     },
     title: {
         fontSize: 30,
@@ -191,6 +202,47 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     button: {
-        color: 'red'
-    }
+        backgroundColor: '#6a0dad', // Purple background
+        paddingVertical: 12, // Vertical padding
+        paddingHorizontal: 20, // Horizontal padding
+        borderRadius: 30, // Rounded corners
+        width: '100%', // Center the text horizontally
+        justifyContent: 'center', // Center the text vertically
+        elevation: 5, // Adds a shadow (Android)
+        shadowColor: '#000', // Shadow color (iOS)
+        shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
+        shadowOpacity: 0.2, // Shadow opacity (iOS)
+        shadowRadius: 5, // Shadow radius (iOS)
+        marginVertical: 3
+    },
+    buttonText: {
+        color: 'white', // White text
+        fontSize: 16, // Font size
+        fontWeight: 'bold', // Bold text
+        textAlign: 'center', // Center the text
+    },
+    container: {
+        flex: 1,
+        width: '100%', // Varmistaa täyden leveyden
+        alignItems: 'center', // Keskittää lapsikomponentit, jos tarpeen
+        justifyContent: 'center', // Keskittää pystysuunnassa, jos tarpeen
+    },
+    gamename: {
+        fontSize: 24, // Isompi fonttikoko otsikolle
+        fontWeight: 'bold', // Lihavoitu teksti
+        color: '#333', // Tumma väri
+        textAlign: 'center', // Keskittää otsikon vaakasuunnassa
+        marginVertical: 10,
+
+    },
+    description: {
+        fontSize: 16, // Pienempi fontti selostukselle
+        color: '#666', // Vaaleampi väri (harmaa)
+        lineHeight: 22, // Rivikorkeus, jotta teksti näyttää siistiltä
+        textAlign: 'left', // Kohdistaa tekstin vasemmalle
+        marginBottom: 15, // Väli selostuksen ja muun sisällön välillä
+        paddingHorizontal: 10,
+        textAlign: 'center' // Lisämarginaali sisällön reunojen suhteen
+      },
+
 });
