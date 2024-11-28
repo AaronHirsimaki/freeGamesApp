@@ -69,7 +69,8 @@ const Home = () => {
         try {
             await set(gameRef, {
                 name: game.title,
-                img: game.thumbnail
+                img: game.thumbnail,
+                link: game.game_url
             });
             console.log('Game added to wishlist');
             loadWishlist(userId);  // Varmista, että käyttäjän ID on mukana

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native';
 import { logout } from '../auth/authService';
 import { FirebaseApp, FirebaseFirestore } from '../firebaseConfig'; // Firestore import
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
@@ -139,7 +139,7 @@ export default function Wishlist({ navigation }) {
           <View style={styles.gameItem}>
             <Image source={{ uri: item.img }} style={styles.image} />
             {/* <Button title="Remove from Wishlist" onPress={() => handleRemoveFromWishlist(item.id)} /> */}
-            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.game_url)}>
+            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.link)}>
               <Text style={styles.buttonText}>Visit site</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => handleRemoveFromWishlist(item.id)}>

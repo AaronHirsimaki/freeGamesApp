@@ -29,8 +29,8 @@ function MainTabs() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = 'home-outline';
+          if (route.name === 'Games') {
+            iconName = 'game-controller-outline';
           } else if (route.name === 'Wishlist') {
             iconName = 'reader-outline';
           } else if (route.name === 'Profile') {
@@ -44,7 +44,7 @@ function MainTabs() {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="Wishlist" component={Wishlist} options={{ headerShown: false }}/>
-      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <Tab.Screen name="Games" component={Home} options={{ headerShown: false }}/>
       <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   )
