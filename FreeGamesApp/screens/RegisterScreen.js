@@ -32,7 +32,7 @@ export default function RegisterScreen({ navigation }) {
         style={styles.input}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {/* <Button title="Register" onPress={handleRegister} /> */}
+      
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
@@ -59,23 +59,23 @@ const styles = StyleSheet.create({
     marginBottom: 12 
 },
 button: {
-    backgroundColor: '#6a0dad', // Purple background
-    paddingVertical: 12, // Vertical padding
-    paddingHorizontal: 20, // Horizontal padding
-    borderRadius: 30, // Rounded corners
-    alignItems: 'center', // Center the text horizontally
-    justifyContent: 'center', // Center the text vertically
-    elevation: 5, // Adds a shadow (Android)
-    shadowColor: '#000', // Shadow color (iOS)
+    backgroundColor: '#6a0dad', 
+    paddingVertical: 12, 
+    paddingHorizontal: 20, 
+    borderRadius: 30, 
+    alignItems: 'center',
+    justifyContent: 'center', 
+    elevation: 5, 
+    shadowColor: '#000', 
     marginBottom: 20,
-    shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
-    shadowOpacity: 0.2, // Shadow opacity (iOS)
-    shadowRadius: 5, // Shadow radius (iOS)
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 5, 
   },
   buttonText: {
-    color: 'white', // White text
-    fontSize: 16, // Font size
-    fontWeight: 'bold', // Bold text
-    textAlign: 'center', // Center the text
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
   }
 });

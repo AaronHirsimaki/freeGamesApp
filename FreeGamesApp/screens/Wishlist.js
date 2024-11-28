@@ -36,9 +36,9 @@ const fetchWishlist = async (userId) => {
 
 const removeGameFromWishlist = async (userId, gameId) => {
   try {
-    const db = getDatabase(FirebaseApp);  // Initialize Realtime Database
-    const gameRef = ref(db, `wishlist/${userId}/${gameId}`);  // Reference to the specific game
-    await remove(gameRef);  // Remove the game from wishlist
+    const db = getDatabase(FirebaseApp);  
+    const gameRef = ref(db, `wishlist/${userId}/${gameId}`);  
+    await remove(gameRef);  
     console.log('Game removed from wishlist');
   } catch (error) {
     console.error('Error removing game from wishlist:', error);
@@ -52,25 +52,12 @@ export default function Wishlist({ navigation }) {
   const userId = FirebaseAuth.currentUser?.uid;
 
 
-  // Funktio pelien hakemiseksi Firestoresta
+  
   const loadGames = async () => {
     setGames([
 
     ]);
   };
-
-  /* const loadWishlist = async () => {
-    console.log("UserId:", userId);
-    if (userId) {
-        console.log("yay")
-        const wishlistData = await fetchWishlist(userId);
-        setWishlist(wishlistData);
-    }
-}; */
-
-  /* useEffect (() => {
-      loadWishlist()
-  },[]) */
 
   useEffect(() => {
     if (!userId) return;
@@ -78,7 +65,7 @@ export default function Wishlist({ navigation }) {
     const db = getDatabase();
     const wishlistRef = ref(db, `wishlist/${userId}`);
 
-    // Subscribe to real-time updates
+    
     const unsubscribe = onValue(wishlistRef, (snapshot) => {
       if (snapshot.exists()) {
         const wishlistData = snapshot.val();
@@ -88,43 +75,19 @@ export default function Wishlist({ navigation }) {
         }));
         setWishlist(formattedWishlist);
       } else {
-        setWishlist([]); // Clear wishlist if no data exists
+        setWishlist([]); 
       }
     });
 
-    // Cleanup the listener on component unmount
     return () => off(wishlistRef);
-  }, [userId]); // Re-run if userId changes
+  }, [userId]); 
 
   useEffect(() => {
     loadGames();
   }, []);
-
-
-  // Lisää peli toivelistalle
-  const handleAddToWishlist = (game) => {
-    addGameToWishlist(userId, game);
-    //loadWishlist(); // Päivittää toivelistan
-  };
-
-  // Poistaa pelin toivelistalta
+  
   const handleRemoveFromWishlist = (gameId) => {
     removeGameFromWishlist(userId, gameId);
-    //loadWishlist(); // Päivittää toivelistan
-  };
-
-  /*  useEffect(() => {
-     loadGames();
-     loadWishlist();
-   }, []); */
-
-  const handleLogout = async () => {
-    try {
-      await logout();  // Kirjaa ulos käyttäjä
-      navigation.navigate('Login');  // Siirry takaisin kirjautumissivulle
-    } catch (error) {
-      console.error('Error during logout:', error.message);
-    }
   };
 
   return (
@@ -138,7 +101,6 @@ export default function Wishlist({ navigation }) {
         renderItem={({ item }) => (
           <View style={styles.gameItem}>
             <Image source={{ uri: item.img }} style={styles.image} />
-            {/* <Button title="Remove from Wishlist" onPress={() => handleRemoveFromWishlist(item.id)} /> */}
             <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.link)}>
               <Text style={styles.buttonText}>Visit site</Text>
             </TouchableOpacity>
@@ -148,7 +110,6 @@ export default function Wishlist({ navigation }) {
           </View>
         )}
       />
-      {/* <Button title="Logout" onPress={handleLogout} /> */}
     </View>
   );
 };
@@ -169,12 +130,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   gameItem: {
-    //justifyContent: 'space-between',
-    width: '100%', // Täyttää näytön leveyden
-    padding: 16, // Lisää sisäistä marginaalia
-    marginBottom: 12, // Väliä kohteiden väliin
-    backgroundColor: '#f9f9f9', // Halutessasi kevyt taustaväri
-    borderRadius: 10, // Pyöristetyt reunat
+    width: '100%', 
+    padding: 16,
+    marginBottom: 12, 
+    backgroundColor: '#f9f9f9', 
+    borderRadius: 10, 
     alignItems: 'center',
   },
   image: {
@@ -184,30 +144,30 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   button: {
-    backgroundColor: '#6a0dad', // Purple background
-    paddingVertical: 12, // Vertical padding
+    backgroundColor: '#6a0dad', 
+    paddingVertical: 12, 
     marginVertical: 5,
-    borderRadius: 30, // Rounded corners
+    borderRadius: 30, 
     width: '100%',
-    justifyContent: 'center', // Center the text vertically
-    elevation: 5, // Adds a shadow (Android)
-    shadowColor: '#000', // Shadow color (iOS)
-    shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
-    shadowOpacity: 0.2, // Shadow opacity (iOS)
-    shadowRadius: 5, // Shadow radius (iOS)
+    justifyContent: 'center', 
+    elevation: 5, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 5, 
   },
   buttonText: {
-    color: 'white', // White text
-    fontSize: 16, // Font size
-    fontWeight: 'bold', // Bold text
-    textAlign: 'center', // Center the text
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold', 
+    textAlign: 'center', 
   },
   gameItem: {
-    width: '100%', // Täyttää koko näytön leveyden
-    padding: 16, // Lisää sisäistä marginaalia
-    marginBottom: 12, // Lisää väliä kohteiden väliin // Kevyt taustaväri erotteluun
-    borderRadius: 10, // Pyöristetyt reunat
-    alignItems: 'center', // Keskittää sisällön
+    width: '100%', 
+    padding: 16,
+    marginBottom: 12, 
+    borderRadius: 10, 
+    alignItems: 'center', 
   },
 
 });

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { logout } from '../auth/authService';
-import { FirebaseAuth } from '../firebaseConfig'; // Oletetaan, että auth on jo konfiguroitu Firebaseen
+import { FirebaseAuth } from '../firebaseConfig';
 
 export default function Profile({ navigation }) {
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    // Hae kirjautuneen käyttäjän sähköposti
+   
     const currentUser = FirebaseAuth.currentUser;
     if (currentUser) {
       setUserEmail(currentUser.email);
@@ -16,8 +16,8 @@ export default function Profile({ navigation }) {
 
   const handleLogout = async () => {
     try {
-      await logout();  // Kirjaa ulos käyttäjä
-      navigation.navigate('Login');  // Siirry takaisin kirjautumissivulle
+      await logout();  
+      navigation.navigate('Login');  
     } catch (error) {
       console.error('Error during logout:', error.message);
     }
@@ -44,23 +44,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#6a0dad', // Purple background
-    paddingVertical: 12, // Vertical padding
+    backgroundColor: '#6a0dad', 
+    paddingVertical: 12, 
 
-    borderRadius: 30, // Rounded corners
+    borderRadius: 30, 
     width: '100%',
-    justifyContent: 'center', // Center the text vertically
-    elevation: 5, // Adds a shadow (Android)
-    shadowColor: '#000', // Shadow color (iOS)
-    shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
-    shadowOpacity: 0.2, // Shadow opacity (iOS)
-    shadowRadius: 5, // Shadow radius (iOS)
+    justifyContent: 'center', 
+    elevation: 5, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 5, 
   },
   buttonText: {
-    color: 'white', // White text
-    fontSize: 16, // Font size
-    fontWeight: 'bold', // Bold text
-    textAlign: 'center', // Center the text
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
   },
   label: {
     fontSize: 18,

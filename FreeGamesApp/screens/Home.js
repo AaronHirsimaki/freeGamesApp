@@ -1,10 +1,7 @@
-
 import { FlatList, Button, StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity, Linking } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FirebaseApp, FirebaseFirestore } from '../firebaseConfig'; // Firestore import
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { FirebaseApp } from '../firebaseConfig';
 import { getDatabase, ref, set, get, remove, push } from "firebase/database";
-import * as Font from 'expo-font';
 
 import { FirebaseAuth } from "../firebaseConfig";
 
@@ -33,7 +30,7 @@ const fetchWishlist = async (userId) => {
 };
 
 
-// Poistaa pelin toivelistalta
+
 const removeGameFromWishlist = async (userId, gameId) => {
     try {
         const db = getDatabase(FirebaseApp);
@@ -51,10 +48,10 @@ const Home = () => {
     const [isLoading, setIsLoding] = useState(true);
     const [error, setError] = useState(null);
     const [wishlist, setWishlist] = useState([]);
-    const userId = FirebaseAuth.currentUser?.uid; // Käytetään FirebaseAuthin currentUser-objektia
+    const userId = FirebaseAuth.currentUser?.uid; 
 
     const addGameToWishlist = async (game) => {
-        const userId = FirebaseAuth.currentUser?.uid;  // Get the current user ID
+        const userId = FirebaseAuth.currentUser?.uid;  
         if (!userId) {
             console.error("User is not logged in");
             return;
@@ -73,13 +70,13 @@ const Home = () => {
                 link: game.game_url
             });
             console.log('Game added to wishlist');
-            loadWishlist(userId);  // Varmista, että käyttäjän ID on mukana
+            loadWishlist(userId); 
         } catch (error) {
             console.error('Error adding game to wishlist:', error);
         }
     };
 
-    // Funktio toivelistan hakemiseksi
+   
     const loadWishlist = async () => {
         console.log("UserId:", userId);
         if (userId) {
@@ -92,36 +89,6 @@ const Home = () => {
     useEffect(() => {
         loadWishlist()
     }, [])
-
-    /* const handleAddToWishlist = async (game) => {
-        try {
-            const userId = FirebaseAuth.currentUser?.uid;  // Get the current user ID
-            if (!userId) throw new Error("User is not logged in");
-
-            const db = getDatabase(FirebaseApp);  // Initialize the Realtime Database
-            const wishlistRef = ref(db, 'wishlists/' + userId);  // Reference to the user's wishlist
-
-            // Use push to add a new game to the user's wishlist
-            const newGameRef = push(wishlistRef);
-            console.log(newGameRef)
-            await set(newGameRef, {
-                gameId: game.id,
-                gameName: game.title,
-                addedAt: Date.now(),
-            });
-
-            console.log("Game added to wishlist successfully");
-        } catch (error) {
-            console.error('Error adding game to wishlist:', error);
-        }
-    }; */
-
-
-    // Poistaa pelin toivelistalta
-    const handleRemoveFromWishlist = (gameId) => {
-        removeGameFromWishlist(userId, gameId);
-        loadWishlist(); // Päivittää toivelistan
-    };
 
     useEffect(() => {
         getGames();
@@ -165,7 +132,6 @@ const Home = () => {
                             <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.game_url)}>
                                 <Text style={styles.buttonText}>Visit site</Text>
                             </TouchableOpacity>
-                            {/* <Button title="Add to Wishlist" style={styles.button} onPress={() => addGameToWishlist(item)}/> */}
                             <TouchableOpacity style={styles.button} onPress={() => addGameToWishlist(item)}>
                                 <Text style={styles.buttonText}>Add to Wishlist</Text>
                             </TouchableOpacity>
@@ -203,47 +169,46 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     button: {
-        backgroundColor: '#6a0dad', // Purple background
-        paddingVertical: 12, // Vertical padding
-        paddingHorizontal: 20, // Horizontal padding
-        borderRadius: 30, // Rounded corners
-        width: '100%', // Center the text horizontally
-        justifyContent: 'center', // Center the text vertically
-        elevation: 5, // Adds a shadow (Android)
-        shadowColor: '#000', // Shadow color (iOS)
-        shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
-        shadowOpacity: 0.2, // Shadow opacity (iOS)
-        shadowRadius: 5, // Shadow radius (iOS)
+        backgroundColor: '#6a0dad', 
+        paddingVertical: 12, 
+        paddingHorizontal: 20, 
+        borderRadius: 30, 
+        width: '100%', 
+        justifyContent: 'center', 
+        elevation: 5, 
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.2, 
         marginVertical: 3
     },
     buttonText: {
-        color: 'white', // White text
-        fontSize: 16, // Font size
-        fontWeight: 'bold', // Bold text
-        textAlign: 'center', // Center the text
+        color: 'white', 
+        fontSize: 16, 
+        fontWeight: 'bold', 
+        textAlign: 'center', 
     },
     container: {
         flex: 1,
-        width: '100%', // Varmistaa täyden leveyden
-        alignItems: 'center', // Keskittää lapsikomponentit, jos tarpeen
-        justifyContent: 'center', // Keskittää pystysuunnassa, jos tarpeen
+        width: '100%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
     },
     gamename: {
-        fontSize: 24, // Isompi fonttikoko otsikolle
-        fontWeight: 'bold', // Lihavoitu teksti
-        color: '#333', // Tumma väri
-        textAlign: 'center', // Keskittää otsikon vaakasuunnassa
+        fontSize: 24, 
+        fontWeight: 'bold', 
+        color: '#333', 
+        textAlign: 'center', 
         marginVertical: 10,
 
     },
     description: {
-        fontSize: 16, // Pienempi fontti selostukselle
-        color: '#666', // Vaaleampi väri (harmaa)
-        lineHeight: 22, // Rivikorkeus, jotta teksti näyttää siistiltä
-        textAlign: 'left', // Kohdistaa tekstin vasemmalle
-        marginBottom: 15, // Väli selostuksen ja muun sisällön välillä
+        fontSize: 16, 
+        color: '#666', 
+        lineHeight: 22, 
+        textAlign: 'left', 
+        marginBottom: 15, 
         paddingHorizontal: 10,
-        textAlign: 'center' // Lisämarginaali sisällön reunojen suhteen
+        textAlign: 'center' 
       },
 
 });

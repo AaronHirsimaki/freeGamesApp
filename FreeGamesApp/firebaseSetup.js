@@ -1,13 +1,9 @@
-// firebaseSetup.js
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
 
-import { initializeApp } from 'firebase/app'; // Firebase v9+ import
-import { getAuth } from 'firebase/auth'; // Firebase Authentication v9+ import
-import firebaseConfig from './firebaseConfig'; // Import your config
+const app = initializeApp(firebaseConfig);
 
-// Firebase initialize
-const app = initializeApp(firebaseConfig); // Initializes Firebase app
+const auth = getAuth(app);
 
-// Get Auth instance
-const auth = getAuth(app); // Use the initialized app instance for auth
-
-export { auth }; // Export auth for use elsewhere
+export { auth }; 

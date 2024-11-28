@@ -18,14 +18,14 @@ export const login = async (email, password) => {
         console.log('Logged in user:', user);
         return user;
       } catch (error) {
-        console.error('Login failed:', error.message);  // Lisätään virheiden lokitus
+        console.error('Login failed:', error.message);  
         throw new Error(error.message);
       }
     };
 
 export const logout = async () => {
     try {
-        await signOut(FirebaseAuth);  // Kirjaa käyttäjä ulos
+        await signOut(FirebaseAuth);  
         console.log('User logged out');
       } catch (error) {
         console.error('Logout failed:', error.message);

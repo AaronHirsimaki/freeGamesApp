@@ -11,9 +11,8 @@ export const saveUserToFirestore = async (user) => {
       return;
     }
 
-    const userRef = doc(FirebaseFirestore, "users", user.uid); // Luo dokumentti käyttäjälle uid:n mukaan
+    const userRef = doc(FirebaseFirestore, "users", user.uid); 
 
-    // Tallenna käyttäjän tiedot Firestoreen
     await setDoc(userRef, {
       uid: user.uid,
       email: user.email,
@@ -42,13 +41,12 @@ export default function LoginScreen() {
     }
 
     try {
-      console.log('Attempting login with', email, password);  // Debug-loki
+      console.log('Attempting login with', email, password);  
       await login(email, password);
       console.log('Login successful');
-      // Voit ohjata käyttäjän eteenpäin onnistuneen kirjautumisen jälkeen
-      navigation.navigate('Home');  // Esimerkiksi, jos haluat siirtyä Home-näkymään
+      navigation.navigate('Home');  
     } catch (error) {
-      console.log('Login error:', error.message);  // Debug-loki virheen varalta
+      console.log('Login error:', error.message);  
       setError(error.message);
     }
   };
@@ -69,8 +67,6 @@ export default function LoginScreen() {
         style={styles.input}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {/* <Button title="Login" onPress={handleLogin} />
-      <Button title="Go to Register" onPress={() => navigation.navigate('Register')} /> */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -97,23 +93,23 @@ const styles = StyleSheet.create({
     marginBottom: 12 
   },
   button: {
-    backgroundColor: '#6a0dad', // Purple background
-    paddingVertical: 12, // Vertical padding
-    paddingHorizontal: 20, // Horizontal padding
-    borderRadius: 30, // Rounded corners
-    alignItems: 'center', // Center the text horizontally
-    justifyContent: 'center', // Center the text vertically
-    elevation: 5, // Adds a shadow (Android)
-    shadowColor: '#000', // Shadow color (iOS)
+    backgroundColor: '#6a0dad', 
+    paddingVertical: 12, 
+    paddingHorizontal: 20, 
+    borderRadius: 30, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    elevation: 5, 
+    shadowColor: '#000', 
     marginBottom: 20,
-    shadowOffset: { width: 0, height: 2 }, // Shadow offset (iOS)
-    shadowOpacity: 0.2, // Shadow opacity (iOS)
-    shadowRadius: 5, // Shadow radius (iOS)
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 5, 
   },
   buttonText: {
-    color: 'white', // White text
-    fontSize: 16, // Font size
-    fontWeight: 'bold', // Bold text
-    textAlign: 'center', // Center the text
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
   }
 });
